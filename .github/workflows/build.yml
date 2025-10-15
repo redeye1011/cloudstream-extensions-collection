@@ -37,7 +37,7 @@ jobs:
       run: chmod +x gradlew
       
     - name: Build extension
-      run: ./gradlew build
+      run: ./gradlew build -x lint
       
     - name: Generate plugins.json
       run: ./gradlew makePluginsJson

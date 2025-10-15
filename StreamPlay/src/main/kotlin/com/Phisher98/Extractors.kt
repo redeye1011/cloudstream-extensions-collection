@@ -1905,11 +1905,11 @@ class UqloadsXyz : ExtractorApi() {
         } else {
             response.document.selectFirst("script:containsData(sources:)")?.data()
         } ?: return
-        val regex = Regex("""hls2":"(?<hls2>[^"]+)"|hls4":"(?<hls4>[^"]+)"""")
+        val regex = Regex("""hls2":"([^"]+)"|hls4":"([^"]+)"""")
         val links = regex.findAll(script)
             .mapNotNull { matchResult ->
-                val hls2 = matchResult.groups["hls2"]?.value
-                val hls4 = matchResult.groups["hls4"]?.value
+                val hls2 = matchResult.groups[1]?.value
+                val hls4 = matchResult.groups[2]?.value
                 when {
                     hls2 != null -> hls2
                     hls4 != null -> "https://uqloads.xyz$hls4"
