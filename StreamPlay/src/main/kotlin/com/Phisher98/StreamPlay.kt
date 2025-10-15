@@ -371,8 +371,8 @@ open class StreamPlay(val sharedPref: SharedPreferences? = null) : TmdbProvider(
                     media.toSearchResponse(type)
                 }?.toNewSearchResponseList()
             
-            if (multiResults != null && multiResults.isNotEmpty()) {
-                Log.d("StreamPlay", "✅ Multi search successful: ${multiResults.size} results")
+            if (multiResults != null) {
+                Log.d("StreamPlay", "✅ Multi search successful")
                 return multiResults
             }
         } catch (e: Exception) {
@@ -393,7 +393,7 @@ open class StreamPlay(val sharedPref: SharedPreferences? = null) : TmdbProvider(
             
             val combinedResults = (movieResults + tvResults).toNewSearchResponseList()
             if (combinedResults.isNotEmpty()) {
-                Log.d("StreamPlay", "✅ Separate searches successful: ${combinedResults.size} results")
+                Log.d("StreamPlay", "✅ Separate searches successful")
                 return combinedResults
             }
         } catch (e: Exception) {
@@ -409,8 +409,8 @@ open class StreamPlay(val sharedPref: SharedPreferences? = null) : TmdbProvider(
                     media.toSearchResponse(type)
                 }?.toNewSearchResponseList()
             
-            if (officialResults != null && officialResults.isNotEmpty()) {
-                Log.d("StreamPlay", "✅ Official API successful: ${officialResults.size} results")
+            if (officialResults != null) {
+                Log.d("StreamPlay", "✅ Official API successful")
                 return officialResults
             }
         } catch (e: Exception) {
