@@ -1,0 +1,61 @@
+name: Build StreamPlay Extension
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'adopt'
+        java-version: '17'
+        
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+      
+    - name: Create local.properties
+      run: |
+        echo "# API Keys for CloudStream Extensions" > local.properties
+        echo "TMDB_API=0d8b3cbbff0cccebd6a0745a23e6f9f3" >> local.properties
+        echo "CINEMATV_API=your_cinematv_api_key_here" >> local.properties
+        echo "MOVIE_API=your_movie_api_key_here" >> local.properties
+        echo "ZSHOW_API=your_zshow_api_key_here" >> local.properties
+        echo "SUPERSTREAM_THIRD_API=your_superstream_third_api_key_here" >> local.properties
+        echo "SUPERSTREAM_FOURTH_API=your_superstream_fourth_api_key_here" >> local.properties
+        echo "Whvx_API=your_whvx_api_key_here" >> local.properties
+        
+    - name: Make gradlew executable
+      run: chmod +x gradlew
+      
+    - name: Build extension
+      run: ./gradlew build
+      
+    - name: Generate plugins.json
+      run: ./gradlew makePluginsJson
+      
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: streamplay-extension
+        path: |
+          build/StreamPlay.cs3
+          build/plugins.json
+          ready_to_install/
+        retention-days: 30
+        
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add build/plugins.json ready_to_install/
+        git diff --staged --quiet || git commit -m "Auto-update: Build StreamPlay extension [skip ci]"
+        git push
