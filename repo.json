@@ -1,0 +1,8 @@
+{
+    "name": "RedEye1011 CloudStream Extensions Collection",
+    "description": "Complete collection of 74 fixed CloudStream extensions with working builds",
+    "manifestVersion": 1,
+    "pluginLists": [
+        "https://raw.githubusercontent.com/redeye1011/cloudstream-extensions-collection/main/plugins.json"
+    ]
+}
